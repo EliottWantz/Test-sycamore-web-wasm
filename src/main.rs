@@ -1,4 +1,5 @@
-use components::my_component::*;
+use components::counter::{self, Counter};
+use components::my_component::{self, MyComponent};
 use sycamore::prelude::*;
 
 mod components;
@@ -6,21 +7,10 @@ mod components;
 fn main() {
     sycamore::render(|cx| {
         let state = create_signal(cx, 0);
-        let double = create_memo(cx, || *state.get() * 2);
-
-        create_effect(cx, || {
-            println!(
-                "State changed. New state value = {}, double is = {}",
-                state.get(),
-                *double.get()
-            );
-        });
 
         view! { cx,
-            MyComponent {}
-            button(on:click=|_| {state.set(*state.get() + 1)}) {
-                (state.get()) " double is " (double.get())
-            }
+            MyComponent(my_component::MyProps { name: String::from("John Doe"), email: "john.doe@doe.com".to_owned() })
+            Counter(counter::MyProps { state: state })
         }
     });
 }
