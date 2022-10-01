@@ -1,4 +1,7 @@
+use components::my_component::*;
 use sycamore::prelude::*;
+
+mod components;
 
 fn main() {
     sycamore::render(|cx| {
@@ -14,6 +17,7 @@ fn main() {
         });
 
         view! { cx,
+            MyComponent {}
             button(on:click=|_| {state.set(*state.get() + 1)}) {
                 (state.get()) " double is " (double.get())
             }
